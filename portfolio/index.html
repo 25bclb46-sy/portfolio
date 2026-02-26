@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Portfolio</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background: #f4f6f9;
+  color: #333;
+  scroll-behavior: smooth;
+}
+
+header {
+  background: #111;
+  padding: 15px 50px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav h2 {
+  color: white;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+}
+
+nav ul li {
+  margin-left: 20px;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+}
+
+section {
+  padding: 100px 20px;
+  text-align: center;
+}
+
+.hero {
+  height: 100vh;
+  background: linear-gradient(to right, #4e73df, #1cc88a);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid white;
+  margin-bottom: 20px;
+}
+
+.hero span {
+  color: yellow;
+}
+
+.btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: white;
+  color: #333;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.project-card {
+  background: white;
+  padding: 20px;
+  margin: 20px auto;
+  width: 80%;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.languages {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.language-badge {
+  background: #4e73df;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 20px;
+}
+
+.contact form {
+  max-width: 500px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.contact input,
+.contact textarea {
+  margin: 10px 0;
+  padding: 10px;
+}
+
+.contact button {
+  padding: 10px;
+  background: #4e73df;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+footer {
+  background: #111;
+  color: white;
+  padding: 20px;
+}
+
+@media(max-width:768px){
+  nav {
+    flex-direction: column;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <nav>
+    <h2>MyPortfolio</h2>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#languages">Languages</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section id="home" class="hero">
+  <!-- 🔹 Replace image link with your own photo -->
+  <img src="profile.jpg.jpeg" alt="Profile Photo" class="profile-img">
+
+  <h1>Hello, I'm <span>Riyaz Ahmed S M</span></h1>
+  <p>Frontend Developer | Backend Developer | Student</p>
+  <a href="#contact" class="btn">Hire Me</a>
+</section>
+
+<section id="about">
+  <h2>About Me</h2>
+  <p>
+    I am a passionate web developer skilled in HTML, CSS, JavaScript and backend technologies.
+    I build modern and responsive web applications.
+  </p>
+</section>
+
+<section id="languages">
+  <h2>Languages I Speak</h2>
+  <div class="languages">
+    <div class="language-badge">English</div>
+    <div class="language-badge">Hindi</div>
+    <div class="language-badge">Tamil</div>
+    <div class="language-badge">Kannada</div>
+    <!-- Add or remove languages as needed -->
+  </div>
+</section>
+
+<section id="projects">
+  <h2>My Projects</h2>
+
+  <div class="project-card">
+    <h3>Portfolio Website</h3>
+    <p>Built using HTML, CSS & JavaScript</p>
+  </div>
+
+  <div class="project-card">
+    <h3>Full Stack App</h3>
+    <p>Connected with Supabase Database</p>
+  </div>
+</section>
+
+<section id="contact" class="contact">
+  <h2>Contact Me</h2>
+
+  <form id="contact-form">
+    <input type="text" id="name" placeholder="Your Name" required>
+    <input type="email" id="email" placeholder="Your Email" required>
+    <textarea id="message" placeholder="Your Message" required></textarea>
+    <button type="submit">Send Message</button>
+  </form>
+
+  <p id="form-status"></p>
+</section>
+
+<footer>
+  <p>© 2026 Your Name | All Rights Reserved</p>
+</footer>
+
+<script>
+// 🔹 Replace with your Supabase project details
+const SUPABASE_URL = "https://your-project-id.supabase.co";
+const SUPABASE_ANON_KEY = "your-anon-public-key";
+
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+const form = document.getElementById("contact-form");
+const status = document.getElementById("form-status");
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const name = document.getElementById("name").value;
+  const email = document.getElementById("email").value;
+  const message = document.getElementById("message").value;
+
+  const { error } = await supabase
+    .from("contacts")
+    .insert([{ name, email, message }]);
+
+  if (error) {
+    status.innerText = "Error sending message!";
+    status.style.color = "red";
+  } else {
+    status.innerText = "Message sent successfully!";
+    status.style.color = "green";
+    form.reset();
+  }
+});
+</script>
+
+</body>
+</html>
