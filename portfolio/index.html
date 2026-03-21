@@ -58,12 +58,16 @@ nav ul li a:hover{
 
 /* SECTIONS */
 section{
-  padding:120px 8%;
+  padding:1000px 8%;
+  min-height:100vh;
+  display:flex;
+  align-item:centre;
 }
 
 .container{
   max-width:1100px;
-  margin:auto;
+  margin:auto
+  width:100%;
 }
 
 .section-title{
@@ -94,9 +98,10 @@ section{
 /* CARD */
 .glass{
   background:#120000;
-  padding:25px;
-  border-radius:10px;
-  margin-top:15px;
+  padding:30px;
+  border-radius:15px;
+  margin-top:20px
+  width:100%;
 }
 
 /* TIMELINE */
@@ -143,8 +148,10 @@ button{
 }
 
 canvas{
-  max-width:500px;
+  width:100% !important;
+  max-width:600px;
   height:300px !important;
+  display:block;
   margin:auto;
 }
 </style>
@@ -250,10 +257,23 @@ new Chart(document.getElementById("chart"),{
   data:{
     labels:["HTML","CSS","JS","Cloud"],
     datasets:[{
-      label:"Skill",
+      label:"Skills",
       data:[25,20,20,15],
       backgroundColor:["red","#cc0000","#990000","#660000"]
     }]
+  },
+  options:{
+    responsive:true,
+    maintainAspectRatio:false,
+    plugins:{
+      legend:{
+        labels:{color:"white"}
+      }
+    },
+    scales:{
+      x:{ticks:{color:"white"}}
+      y:{ticks:{color:"white"}}
+    }
   }
 });
 </script>
